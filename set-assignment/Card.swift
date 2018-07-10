@@ -25,24 +25,28 @@ enum Color {
     case Blue
     case Orange
 }
-class Card {
+struct Card {
     var isMatched = false
     let shape: Shape
     let shade: Shade
     let color: Color
     let number: Int
+    static var idFactory = 0
+    let id: Int
     init(shape s: Shape, shade sd: Shade, color c: Color, number n: Int) {
         shape = s
         shade = sd
         color = c
         number = n
+        Card.idFactory += 1
+        id = Card.idFactory
     }
     
-    func match(){
+    mutating func match(){
         isMatched = true
     }
     
     static func == (lhs: Card, rhs: Card) -> Bool{
-        return lhs.shape == rhs.shape || lhs.shade == rhs.shade || lhs.color == rhs.color || lhs.number == rhs.number
+        return lhs.id == rhs.id
     }
 }

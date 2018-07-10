@@ -25,20 +25,23 @@ class Set {
                 }
             }
         }
-        
-        for _ in 0...500 {
-            let random = Int(arc4random_uniform(81))
-            let rCard = cards[random]
-            cards.remove(at: random)
-            cards.append(rCard)
-        }
     }
     
     func selectCard(at i:Int){
-        cards[i].isMatched = true
+        cards[i].match()
+    }
+    
+    func draw () -> Card {
+        return cards.remove(at: cards.count.rand)
     }
     
     func getAvailableCards() -> [Card] {
         return cards.filter( {!$0.isMatched} )
+    }
+}
+
+extension Int {
+    var rand: Int {
+        return Int(arc4random_uniform(UInt32(self)))
     }
 }
